@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 61a83bed6d79d0a44908e38b02061266
+timeCreated: 1495104956
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hipchick
+  fontNames:
+  - Hipchick
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
