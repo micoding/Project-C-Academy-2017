@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using System.Linq;
 using System;
 
@@ -16,9 +13,6 @@ public class GameController : MonoBehaviour {
     public Transform fence2;
     public Transform fence3;
 
-    public GameObject spawnCanvas;
-    public GameObject gameCanvas;
-
     public GameObject anim0;
     public GameObject anim1;
     public GameObject anim2;
@@ -27,18 +21,7 @@ public class GameController : MonoBehaviour {
 
     List<Animal> allAnimals = new List<Animal>();
 
-    public GameObject fence0Button; //ChosenFance0
-    public GameObject fence1Button;
-    public GameObject fence2Button;
-    public GameObject fence3Button;
-
-    public GameObject anim0Button;
-    public GameObject anim1Button;
-    public GameObject anim2Button;
-    public GameObject anim3Button;
-
     public int whichOne = -1;
-    public Transform where = null;
 
     GameObject animal;
     Animal script;
@@ -49,55 +32,16 @@ public class GameController : MonoBehaviour {
     public GameObject soldierPrefab;
     GameObject thisPrefab;
 
-
     public Transform turistSpawn;
     public double turistTimer;
     public double turistInterest;
 
     public int howManyAvailable;
-    public GameObject animalCanvas;
-    public GameObject fanceCanvas;
     bool stillLoop = true;
     public GameObject stopLoop;
 
-    public GameObject pauseCanvas;
-    public GameObject eatCanvas;
-    public GameObject healthCanvas;
-    public GameObject infoCanvas;
-    public GameObject SliderCanvas;
-
-    public Slider healthSlider0;
-    public Slider healthSlider1;
-    public Slider healthSlider2;
-    public Slider healthSlider3;
-
-    public Slider hungerSlider0;
-    public Slider hungerSlider1;
-    public Slider hungerSlider2;
-    public Slider hungerSlider3;
-
-    public GameObject mealFence0;
-    public GameObject mealFence1;
-    public GameObject mealFence2;
-    public GameObject mealFence3;
-
-    public GameObject healFence0;
-    public GameObject healFence1;
-    public GameObject healFence2;
-    public GameObject healFence3;
-
     public bool isStart = false;
     public bool isGO = false;
-    public GameObject gameOverCanvas;
-
-    public Text starved;
-    public Text diedSick;
-    public Text diedOld;
-    public Text result;
-
-    public GameObject goodGame;
-    public GameObject badGame;
-    public GameObject newRecord;
 
     public int howManyStarted;
 
@@ -106,6 +50,12 @@ public class GameController : MonoBehaviour {
     public GameObject smallCloudPrefab;
     public GameObject bigCloudPrefab;
     float timeCloud;
+
+    UIController uI;
+
+    public double minLeft;
+    public double secLeft;
+    public double left;
 
     private void Awake()
     {
@@ -116,10 +66,15 @@ public class GameController : MonoBehaviour {
         GameControllerStatic.diedOld = 0;
         GameControllerStatic.starved = 0;
         GameControllerStatic.diedSick = 0;
+        foreach (Turist item in GameControllerStatic.turists)
+        {
+            Destroy(item);
+        }
     }
 
     // Use this for initialization
     void Start() {
+        uI = GameObject.Find("UI").GetComponent<UIController>();
         uD = GameObject.Find("Player").GetComponent<UserData>();
         allAnimals.Add(anim0.GetComponent<Animal>());
         allAnimals.Add(anim1.GetComponent<Animal>());
@@ -145,15 +100,16 @@ public class GameController : MonoBehaviour {
         timeCloud -= Time.deltaTime;
         if(timeCloud<=0)
             CloudSpawn();
+        TimeLeft();
     }
 
-    public void StartSpawn()
+    public void StartSpawn(Transform where)
     {
-        animalCanvas.SetActive(false);
-        fanceCanvas.SetActive(false);
+        uI.animalCanvas.SetActive(false);
+        uI.fanceCanvas.SetActive(false);
         if (where != null)
         {
-            Create();
+            Create(where);
             howManyStarted++;
             isStart = true;
         }
@@ -164,72 +120,27 @@ public class GameController : MonoBehaviour {
         {
             CanAfford();
             stopLoop.SetActive(true);
-            animalCanvas.SetActive(true);
+            uI.animalCanvas.SetActive(true);
         }
         else
         {
             Time.timeScale = 1;
-            gameCanvas.SetActive(true);
-            SliderCanvas.SetActive(true);
+            uI.gameCanvas.SetActive(true);
+            uI.sliderCanvas.SetActive(true);
         }
 
     }
 
-    public void Spawn()
+    void Spawn()
     {
         stopLoop.SetActive(false);
         Time.timeScale = 0;
-        gameCanvas.SetActive(false);
-        animalCanvas.SetActive(true);
+        uI.gameCanvas.SetActive(false);
+        uI.animalCanvas.SetActive(true);
         CanAfford();
     }
 
-    public void Opction0()
-    {
-        where = fence0;
-        StartSpawn();
-    }
-    public void Opction1()
-    {
-        where = fence1;
-        StartSpawn();
-    }
-    public void Opction2()
-    {
-        where = fence2;
-        StartSpawn();
-    }
-    public void Opction3()
-    {
-        where = fence3;
-        StartSpawn();
-    }
-    public void This0()
-    {
-        whichOne = 0;
-        animalCanvas.SetActive(false);
-        fanceCanvas.SetActive(true);
-    }
-    public void This1()
-    {
-        whichOne = 1;
-        animalCanvas.SetActive(false);
-        fanceCanvas.SetActive(true);
-    }
-    public void This2()
-    {
-        whichOne = 2;
-        animalCanvas.SetActive(false);
-        fanceCanvas.SetActive(true);
-    }
-    public void This3()
-    {
-        whichOne = 3;
-        animalCanvas.SetActive(false);
-        fanceCanvas.SetActive(true);
-    }
-
-    public void Create()
+    void Create(Transform where)
     {
         GameObject tmp = null;
         switch (whichOne)
@@ -258,12 +169,12 @@ public class GameController : MonoBehaviour {
         where = null;
     }
 
-    public void CanAfford()
+    void CanAfford()
     {
-        anim0Button.SetActive(false);
-        anim1Button.SetActive(false);
-        anim2Button.SetActive(false);
-        anim3Button.SetActive(false);
+        uI.anim0Button.SetActive(false);
+        uI.anim1Button.SetActive(false);
+        uI.anim2Button.SetActive(false);
+        uI.anim3Button.SetActive(false);
 
         List<Animal> CAAnim = allAnimals.FindAll(item => item.price <= UserData.money);
 
@@ -272,43 +183,19 @@ public class GameController : MonoBehaviour {
             switch (Anim.race)
             {
                 case "anim0":
-                    anim0Button.SetActive(true);
+                    uI.anim0Button.SetActive(true);
                     break;
                 case "anim1":
-                    anim1Button.SetActive(true);
+                    uI.anim1Button.SetActive(true);
                     break;
                 case "anim2":
-                    anim2Button.SetActive(true);
+                    uI.anim2Button.SetActive(true);
                     break;
                 case "anim3":
-                    anim3Button.SetActive(true);
+                    uI.anim3Button.SetActive(true);
                     break;
             }
         }
-    }
-
-    public void HealFence0()
-    {
-        Animal tmp = animals.First(item => item.where == fence0);
-        tmp.Heal();
-    }
-
-    public void HealFence1()
-    {
-        Animal tmp = animals.First(item => item.where == fence1);
-        tmp.Heal();
-    }
-
-    public void HealFence2()
-    {
-        Animal tmp = animals.First(item => item.where == fence2);
-        tmp.Heal();
-    }
-
-    public void HealFence3()
-    {
-        Animal tmp = animals.First(item => item.where == fence3);
-        tmp.Heal();
     }
 
     void TuristSpawn()
@@ -358,96 +245,12 @@ public class GameController : MonoBehaviour {
 
     public void DeleteAnimal()
     {
-        animals.RemoveAll(item => item.health <= 0 || item.hunger <= 0);
+        animals.RemoveAll(item => item.health <= 0 || item.hunger <= 0 || item.leftLife <= 0);
     }
 
-    public void Pause(GameObject from)
+    void IsEveryoneDead()
     {
-        Time.timeScale = 0;
-        from.SetActive(false);
-        SliderCanvas.SetActive(false);
-        pauseCanvas.SetActive(true);
-    }
-
-    public void SwitchTo(GameObject to)
-    {
-        gameCanvas.SetActive(false);
-        to.SetActive(true);
-    }
-
-    public void Return()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(1);
-        SliderCanvas.SetActive(true);
-    }
-
-    public void BackToGame(GameObject from)
-    {
-        Time.timeScale = 1;
-        from.SetActive(false);
-        gameCanvas.SetActive(true);
-        SliderCanvas.SetActive(true);
-    }
-
-    public void GoMenu()
-    {
-        Time.timeScale = 1;
-        SceneManager.LoadScene(0);
-    }
-
-    public void Info()
-    {
-        pauseCanvas.SetActive(false);
-        gameOverCanvas.SetActive(false);
-        infoCanvas.SetActive(true);
-    }
-
-    public void MealFence0()
-    {
-        Animal tmp = animals.First(item => item.where == fence0);
-        tmp.Meal();
-    }
-
-    public void MealFence1()
-    {
-        Animal tmp = animals.First(item => item.where == fence1);
-        tmp.Meal();
-    }
-
-    public void MealFence2()
-    {
-        Animal tmp = animals.First(item => item.where == fence2);
-        tmp.Meal();
-    }
-
-    public void MealFence3()
-    {
-        Animal tmp = animals.First(item => item.where == fence3);
-        tmp.Meal();
-    }
-
-    public void BuyAidKid()
-    {
-        if (UserData.money >= 10000)
-        {
-            UserData.money -= 10000;
-            UserData.aidKit += 10;
-        }
-    }
-
-    public void BuyMeals()
-    {
-        if (UserData.money >= 5000)
-        {
-            UserData.money -= 5000;
-            UserData.snacks += 100;
-        }
-    }
-
-    public void IsEveryoneDead()
-    {
-        if (!animals.Any() && isStart)
+        if (!animals.Any() && isStart && !isGO)
         {
             isGO = true;
         }
@@ -455,48 +258,55 @@ public class GameController : MonoBehaviour {
             GameOver();
     }
 
-    public void GameOver()
+    void GameOver()
     {
+        foreach (Turist item in GameControllerStatic.turists)
+        {
+            Destroy(item);
+        }
+
         Time.timeScale = 0;
-        pauseCanvas.SetActive(false);
-        gameCanvas.SetActive(false);
-        fanceCanvas.SetActive(false);
-        animalCanvas.SetActive(false);
-        eatCanvas.SetActive(false);
-        healthCanvas.SetActive(false);
-        infoCanvas.SetActive(false);
-        SliderCanvas.SetActive(false);
+        uI.pauseCanvas.SetActive(false);
+        uI.gameCanvas.SetActive(false);
+        uI.fanceCanvas.SetActive(false);
+        uI.animalCanvas.SetActive(false);
+        uI.eatCanvas.SetActive(false);
+        uI.healthCanvas.SetActive(false);
+        uI.infoCanvas.SetActive(false);
+        uI.sliderCanvas.SetActive(false);
 
         Score();
-        starved.text = GameControllerStatic.starved.ToString();
-        diedOld.text = GameControllerStatic.diedOld.ToString();
-        diedSick.text = GameControllerStatic.diedSick.ToString();
-        result.text = UserData.score.ToString();
+        uI.starved.text = GameControllerStatic.starved.ToString();
+        uI.diedOld.text = GameControllerStatic.diedOld.ToString();
+        uI.diedSick.text = GameControllerStatic.diedSick.ToString();
+        uI.result.text = UserData.score.ToString();
         
         if (howManyStarted == GameControllerStatic.diedOld)
         {
-            goodGame.SetActive(true);
+            uI.goodGame.SetActive(true);
         }
         else if (GameControllerStatic.starved + GameControllerStatic.diedSick >= howManyStarted/2)
         {
-            badGame.SetActive(true);
+            uI.badGame.SetActive(true);
         }
         if(UserData.score > UserData.record)
         {
             PlayerPrefs.SetInt("Record", UserData.score);
             PlayerPrefs.Save();
-            newRecord.SetActive(true);
+            uI.newRecord.SetActive(true);
             UserData.record = PlayerPrefs.GetInt("Record");
         }
-        gameOverCanvas.SetActive(true);
+        uI.gameOverCanvas.SetActive(true);
     }
 
-    public void Score()
+    void Score()
     {
-        if(GameControllerStatic.diedOld != 0)
-            UserData.score = (int)Math.Ceiling((UserData.money / (GameControllerStatic.starved * 2 + GameControllerStatic.diedSick * 3)) * GameControllerStatic.diedOld);
+        if (GameControllerStatic.diedOld != 0 && (GameControllerStatic.starved != 0 || GameControllerStatic.diedSick != 0))
+            UserData.score = (int)Math.Floor((UserData.money / (GameControllerStatic.starved * 2 + GameControllerStatic.diedSick * 3)) * GameControllerStatic.diedOld);
+        else if (GameControllerStatic.diedOld != 0)
+            UserData.score = (int)Math.Floor(UserData.money * GameControllerStatic.diedOld);
         else
-            UserData.score = (int)Math.Ceiling(UserData.money / (GameControllerStatic.starved * 2 + GameControllerStatic.diedSick * 3));
+            UserData.score = (int)Math.Floor(UserData.money / (GameControllerStatic.starved * 2 + GameControllerStatic.diedSick * 3));
     }
 
     void CloudSpawn()
@@ -516,5 +326,29 @@ public class GameController : MonoBehaviour {
                 break;
         }
         Instantiate(cloudPrefab, cloudSpawn);
+    }
+
+    void TimeLeft()
+    {
+        if (animals.Any())
+        {
+            left = animals.Max(item => item.leftLife);
+            minLeft = Math.Floor(left / 60);
+            secLeft = Math.Round(left - minLeft * 60);
+            if (minLeft >= 0 && secLeft >= 0)
+            {
+                uI.minLeft.text = minLeft.ToString();
+                uI.secLeft.text = secLeft.ToString();
+                if (minLeft <= 0)
+                    uI.secLeft.color = new Color(1, 0, 0);
+                else
+                    uI.secLeft.color = new Color(0, 0, 0);
+            }
+        }
+        else
+        {
+            uI.minLeft.text = "00";
+            uI.secLeft.text = "00";
+        }
     }
 }

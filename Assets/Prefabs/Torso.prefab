@@ -390,7 +390,7 @@ MonoBehaviour:
   movementSpeed: {x: 0.4, y: 0}
   photoTime: 4
   isAnimal: 0
-  cash: 1000
+  cash: 10000
 --- !u!212 &212125917833051960
 SpriteRenderer:
   m_ObjectHideFlags: 1

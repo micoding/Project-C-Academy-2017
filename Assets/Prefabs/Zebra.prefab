@@ -74,8 +74,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 400
-  duration: 0
+  leftLife: 0
+  maxHealth: 200
   timer: 0
   price: 10000
   atraction: 2

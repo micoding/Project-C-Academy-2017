@@ -1,14 +1,11 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class Turist : MonoBehaviour {
 
     public Vector2 movementSpeed;
     Animator anim;
     Rigidbody2D rB;
-
     GameController gC;
     public float photoTime;
     public bool isAnimal;
@@ -17,6 +14,10 @@ public class Turist : MonoBehaviour {
     SpriteRenderer sR;
     string layer;
 
+    private void Awake()
+    {
+         GameControllerStatic.turists.Add(this);
+    }
     // Use this for initialization
     void Start () {
         gC = GameObject.Find("GameController").GetComponent<GameController>();
@@ -31,8 +32,6 @@ public class Turist : MonoBehaviour {
         MoveToLayer(this.transform, layer);
 
         rB.velocity = movementSpeed;
-
-        cash -= 100;
         gC.income += 100;
     }
 
@@ -89,15 +88,15 @@ public class Turist : MonoBehaviour {
         }
     }
 
-    public void Photo(Transform where)
+    void Photo(Transform where)
     {
-        anim.SetTrigger("Photo");
+        anim.SetTrigger("Photo");// starts animation
         double health = gC.animals.Find(item => item.where == where).health;
         double atraction = gC.animals.Find(item => item.where == where).atraction;
         if (health * atraction <= cash)
         {
-            gC.income += health * atraction;
-            cash -= health * atraction;
+            gC.income += health * atraction * 4;
+            cash -= health * atraction * 4;
         }
         else
         {
@@ -108,10 +107,11 @@ public class Turist : MonoBehaviour {
 
     void OnBecameInvisible()
     {
+        GameControllerStatic.turists.Remove(this);
         Destroy(this.gameObject);
     }
 
-    void MoveToLayer(Transform root, string layer)
+    void MoveToLayer(Transform root, string layer) // recursive func for changing layer in turist
     {
         root.GetComponent<SpriteRenderer>().sortingLayerName = layer;
         foreach (Transform child in root)

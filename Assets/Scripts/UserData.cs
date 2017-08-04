@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +11,6 @@ public class UserData : MonoBehaviour {
     public double moneyForInspector;
     public static int aidKit;
     public int aidKitForInspector;
-
     public static int snacks;
     public int snacksForInspector;
 
@@ -42,7 +40,7 @@ public class UserData : MonoBehaviour {
         snacksText.text = snacks.ToString();
     }
 
-    public IEnumerator Flashing()
+    public IEnumerator Flashing() // func to flash the money text
     {
         moneyText.color = new Color(1, 0, 0);
 
@@ -51,7 +49,7 @@ public class UserData : MonoBehaviour {
         moneyText.color = new Color(0, 0, 0);
     }
 
-    void WhichMoneyText()
+    void WhichMoneyText() //func setting money to display in proper place
     {
         if (moneyTextGame.gameObject.activeInHierarchy)
             moneyText = moneyTextGame;

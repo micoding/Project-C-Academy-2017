@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Movement : MonoBehaviour {
 
@@ -21,11 +19,6 @@ public class Movement : MonoBehaviour {
         sR.flipX = flip;
         rB.velocity = movementSpeed;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     void OnBecameInvisible()
     {
