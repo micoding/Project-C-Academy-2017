@@ -5,7 +5,7 @@ using System;
 
 public class GameController : MonoBehaviour {
 
-    public double time;
+    public double time;// duration of game
     public double income;
 
     public Transform fence0;
@@ -13,13 +13,13 @@ public class GameController : MonoBehaviour {
     public Transform fence2;
     public Transform fence3;
 
-    public GameObject anim0;
-    public GameObject anim1;
-    public GameObject anim2;
-    public GameObject anim3;
-    public List<Animal> animals = new List<Animal>();
+    public GameObject anim0;//prefab anim0
+    public GameObject anim1;//up
+    public GameObject anim2;//up
+    public GameObject anim3;//up
+    public List<Animal> animals = new List<Animal>();//list of animals in game
 
-    List<Animal> allAnimals = new List<Animal>();
+    List<Animal> allAnimals = new List<Animal>();//all possible animals
 
     public int whichOne = -1;
 
@@ -27,6 +27,7 @@ public class GameController : MonoBehaviour {
     Animal script;
     UserData uD;
 
+    //prefabs of turists
     public GameObject turistPrefab;
     public GameObject femalePrefab;
     public GameObject soldierPrefab;
@@ -59,6 +60,7 @@ public class GameController : MonoBehaviour {
 
     private void Awake()
     {
+        //reset static controller
         GameControllerStatic.fence0Available = true;
         GameControllerStatic.fence1Available = true;
         GameControllerStatic.fence2Available = true;
@@ -122,7 +124,7 @@ public class GameController : MonoBehaviour {
             stopLoop.SetActive(true);
             uI.animalCanvas.SetActive(true);
         }
-        else
+        else//turn game on
         {
             Time.timeScale = 1;
             uI.gameCanvas.SetActive(true);
@@ -131,7 +133,7 @@ public class GameController : MonoBehaviour {
 
     }
 
-    void Spawn()
+    void Spawn()//first run
     {
         stopLoop.SetActive(false);
         Time.timeScale = 0;
@@ -140,7 +142,7 @@ public class GameController : MonoBehaviour {
         CanAfford();
     }
 
-    void Create(Transform where)
+    void Create(Transform where)//creates animal
     {
         GameObject tmp = null;
         switch (whichOne)
@@ -169,7 +171,7 @@ public class GameController : MonoBehaviour {
         where = null;
     }
 
-    void CanAfford()
+    void CanAfford()//can player afford the animal
     {
         uI.anim0Button.SetActive(false);
         uI.anim1Button.SetActive(false);
@@ -198,7 +200,7 @@ public class GameController : MonoBehaviour {
         }
     }
 
-    void TuristSpawn()
+    void TuristSpawn()//spawn the turist
     {
         if (turistTimer <= 0)
         {
@@ -227,7 +229,7 @@ public class GameController : MonoBehaviour {
         turistTimer -= Time.deltaTime;
     }
 
-    void TuristInterest()
+    void TuristInterest()//set the interrest of turist
     {
         double divisor = 0;
         turistInterest = 0;
@@ -253,9 +255,8 @@ public class GameController : MonoBehaviour {
         if (!animals.Any() && isStart && !isGO)
         {
             isGO = true;
-        }
-        if (isGO)
             GameOver();
+        }
     }
 
     void GameOver()
@@ -328,7 +329,7 @@ public class GameController : MonoBehaviour {
         Instantiate(cloudPrefab, cloudSpawn);
     }
 
-    void TimeLeft()
+    void TimeLeft()//show time is left in game
     {
         if (animals.Any())
         {

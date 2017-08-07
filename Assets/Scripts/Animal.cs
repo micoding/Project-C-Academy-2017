@@ -38,7 +38,7 @@ public class Animal : MonoBehaviour {
         answer = GameControllerStatic.FenceNOTAvailable(where); 
         uI = GameObject.Find("UI").GetComponent<UIController>();
         spriteRen = GetComponent<SpriteRenderer>();
-        health = maxHealth;
+        health = maxHealth;//set to maxHealth
         leftLife = maxHealth;
         if (answer == 1 || answer == 2)
             spriteRen.sortingLayerName = "AnimalFrontRow"; //bring animals sprite to front layer
@@ -63,7 +63,7 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    void Death()
+    void Death()//decrement the health and if died its executing it
     {
         health -= Time.deltaTime;
         leftLife -= Time.deltaTime;
@@ -84,7 +84,7 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    void Health()
+    void Health()// change the health + random divide to health
     {
         timer -= Time.deltaTime;
         if (timer <= 0)
@@ -95,7 +95,7 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    public void Heal()
+    public void Heal()// heals the animal
     {
         float ten;
         ten = (float)health / 10;
@@ -114,12 +114,12 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    void Hunger()
+    void Hunger()//change the hunger
     {
         hunger -= maintenanceCost * Time.deltaTime;
     }
 
-    public void Meal()
+    public void Meal()//feed the animal
     {
         if (1 <= UserData.snacks && hunger < 100)
         {
@@ -136,14 +136,14 @@ public class Animal : MonoBehaviour {
         }
     }
 
-    void Slider()
+    void Slider()//actualise sliders
     {
         healthSlider.maxValue = (float)maxHealth;
         healthSlider.value = (float)health;
         hungerSlider.value = (float)hunger;
     }
 
-    void WhichSlider()
+    void WhichSlider()// connects correct sliders
     {
         switch(answer)
         {
@@ -185,7 +185,7 @@ public class Animal : MonoBehaviour {
         cF.velocity = new Vector2(0, 1);
     }
 
-    IEnumerator Kill(int diedHow)
+    IEnumerator Kill(int diedHow)//wait for time
     {
         yield return new WaitForSeconds(4);
         diedHow++;

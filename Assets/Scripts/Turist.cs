@@ -47,7 +47,7 @@ public class Turist : MonoBehaviour {
         rB.velocity = movementSpeed;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)//check is animal is in the fence and turist have money
     {
         collisionTransform = collision.transform;
         string tag = collision.tag;
@@ -88,7 +88,7 @@ public class Turist : MonoBehaviour {
         }
     }
 
-    void Photo(Transform where)
+    void Photo(Transform where)//pay for animal
     {
         anim.SetTrigger("Photo");// starts animation
         double health = gC.animals.Find(item => item.where == where).health;

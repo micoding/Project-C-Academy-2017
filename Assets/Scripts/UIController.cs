@@ -186,7 +186,6 @@ public class UIController : MonoBehaviour {
 
     public void Info()
     {
-        Debug.Log("info");
         pauseCanvas.SetActive(false);
         gameOverCanvas.SetActive(false);
         infoCanvas.SetActive(true);
