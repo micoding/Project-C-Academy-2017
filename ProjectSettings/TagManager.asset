@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Turist
+  - FenceStop
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Clouds
+    uniqueID: 2810736253
+    locked: 0
+  - name: Animal
+    uniqueID: 883331409
+    locked: 0
+  - name: Fence
+    uniqueID: 3983158197
+    locked: 0
+  - name: AnimalFrontRow
+    uniqueID: 3676675175
+    locked: 0
+  - name: FenceFrontRow
+    uniqueID: 1637765861
+    locked: 0
+  - name: Player1
+    uniqueID: 466601155
+    locked: 0
+  - name: Player2
+    uniqueID: 3742774979
+    locked: 0
+  - name: Grass
+    uniqueID: 1795947733
+    locked: 0

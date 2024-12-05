@@ -1,0 +1,30 @@
+https://youtu.be/1GayvlupM3I
+*Projektowane dla proporci ekranu 16:9
+Grę Project ZOO zaprojektowałem w środowisku Unity używając skryptów w C#.
+Wszystkie cele projektu zostały zrealizowane.
+
+Gra polega na zarządzaniu zdrowiem i sytością zwierząt.
+
+1.Zdrowie spada losowo, sytość natomiast, spada w stałym tempie.
+2.Jak często będą pojawiać się turyści zależy od średniej ważonej zdrowia i atrakcyjności zwierząt.
+3.Końcowy wynik zależy od tego ile zwierząt umarło jaką śmiercią (z głodu, ze starości lub przez chorobę), oraz od pozostałych pieniędzy.
+
+Opis Rozgrywki:
+Po odpaleniu gry i rozpoczęciu rozgrywki gracz wybiera zwierzę kosztujące daną ilość pieniędzy, obecnie posiadane pieniądze są wyświetlane w prawym górnym rogu. Po wybraniu zwierzęcia dokonuje wyboru zagrody w której będzie się znajdować, w następnym kroku może wybrać następne zwierzę, lub zacząć rozgrywkę naciskając przycisk w prawym dolnym rogu.
+
+Podczas trwania gry, u góry są wyświetlane paski zdrowia i głodu dla każdego zwierzęcia. Gracz ma kontrolę nad dwoma opcjami interakcji, pierwszy w postaci leczenia apteczkami (prawy dolny róg) po wejściu do panelu leczenia wyświetlanie ilości pieniędzy zmienia się na informację o ilości dostępnych apteczek. Leczenie danego zwierzęcia odbywa się za pomocą przycisków apteczek widocznych przed zagrodami. Gdy zabraknie apteczek, gracz może dokupić je poprzez kliknięcie w przycisk ulokowany w prawym dolnm rogu, za określoną liczbę pieniędzy, apteczki kupuje się pakietami. Zawsze jest dostępna możliwość powrotu do panelu domyślnego (lewy górny róg). Panel karmienia jest zaprojektowany analogicznie. W panelu domyślnym dostępne jest menu pauzy. Podczas pauzy można powrócić do gry, wrócić do menu zacząć od nowa, lub dowiedzieć się więcej o grze.
+
+Dodatkowe informacje:
+W trakcie tworzenia rozwijała się wizja samej mechaniki gry, teraz wiem, że zrobił bym trochę inaczej, tzn. najpierw bym zaprojektował mechaniki a dopiero potem bym je implementował. Równierz dodałbym nowe poziomy do odblokowania i dodał następne mechaniki.
+
+Elementy użyte:
+Listy
+Linq do list
+Funkcja rekurencyjna
+Switch i inne podstawowe
+Elementy środowiska Unity
+Interfejsy
+Typy generyczne
+i inne
+
+*Lista użytych Spritów itp. znajduje się w pliku README.md
